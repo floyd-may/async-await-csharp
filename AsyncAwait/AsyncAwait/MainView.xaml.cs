@@ -25,10 +25,5 @@ namespace AsyncAwait
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Thread.Sleep(TimeSpan.FromSeconds(2));
-        }
     }
 }

@@ -15,23 +15,7 @@ namespace AsyncAwait {
 
             container.Singleton<IWindowManager, WindowManager>();
 
-            container.PerRequest<MainViewModel>().Activated += (o) => {
-                if (!(o is MainViewModel))
-                    return;
-
-                var vm = (MainViewModel)o;
-
-                var timer = new System.Timers.Timer
-                {
-                    Interval = 100
-                };
-
-                timer.Elapsed += (x, args) =>
-                {
-                    Application.Dispatcher.BeginInvoke(new System.Action(() => vm.RotationAngle = (int)(DateTime.Now.Millisecond * .36)));
-                };
-                timer.Start();
-            };
+            container.PerRequest<MainViewModel>();
         }
 
         protected override object GetInstance(Type service, string key) {

@@ -67,7 +67,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="IShell.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ResultViewModel.cs" />
     <Page Include="MainView.xaml">

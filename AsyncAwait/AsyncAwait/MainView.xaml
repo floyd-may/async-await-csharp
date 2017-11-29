@@ -4,9 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Height="350" Width="525"
+        Height="350" Width="600"
         Title="Async / await demo"
-             Background="White">
+             Background="White"
+        TextElement.FontSize="22"
+        >
+    <Window.Resources>
+        <Storyboard x:Key="rotationStoryboard" Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)">
+            <DoubleAnimation From="0" To="360" BeginTime="0:0:0" Duration="0:0:1" RepeatBehavior="Forever" />
+        </Storyboard>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="6" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -17,19 +27,36 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         
-        <Border Grid.Column="2" Grid.RowSpan="2" Width="5" Height="100" BorderBrush="Black" BorderThickness="5">
+        <Border Grid.Column="2" Grid.RowSpan="10" Width="5" Height="100" BorderBrush="Black" BorderThickness="5">
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard Storyboard="{StaticResource rotationStoryboard}" />
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Border.Triggers>
+
             <Border.RenderTransform>
-                <RotateTransform Angle="{Binding RotationAngle}" CenterX="2.5" CenterY="50" />
+                <RotateTransform Angle="0" CenterX="2.5" CenterY="50" />
             </Border.RenderTransform>
         </Border>
 
-        <Button x:Name="Synchronous" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Do Synchronous Stuff</Button>
+        <Button x:Name="Synchronous" HorizontalAlignment="Center" VerticalAlignment="Center">Sync</Button>
 
-        <Button x:Name="Asynchronous" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">Do Asynchronous Stuff</Button>
+        <Button x:Name="Asynchronous" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">Async</Button>
 
-        <ListBox ItemsSource="{Binding Results}" Grid.RowSpan="2" Grid.Column="1">
+        <Button x:Name="ComplexAsyncCapturesContext" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">Complex w/ Context</Button>
+
+        <Button x:Name="ComplexAsyncNoContext" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">Complex, No Context</Button>
+
+        <Button x:Name="Deadlock" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">Deadlock</Button>
+
+        <ListBox ItemsSource="{Binding Results}" Grid.RowSpan="10" Grid.Column="1" Margin="15">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
